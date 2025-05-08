@@ -1,22 +1,18 @@
-use alloy_sol_types::sol;
+use sp1_zkvm::io;
 
-sol! {
-    /// The public values encoded as a struct that can be easily deserialized inside Solidity.
-    struct PublicValuesStruct {
-        uint32 n;
-        uint32 a;
-        uint32 b;
-    }
-}
-
-/// Compute the n'th fibonacci number (wrapping around on overflows), using normal Rust code.
-pub fn fibonacci(n: u32) -> (u32, u32) {
-    let mut a = 0u32;
-    let mut b = 1u32;
-    for _ in 0..n {
-        let c = a.wrapping_add(b);
-        a = b;
-        b = c;
-    }
-    (a, b)
+pub fn calculate_icr(
+    id: u32,
+    user_address: String,
+    created_at: String,
+    collateral_amount: u32,
+    debt_amount: u32,
+    btc_price_usd: u32,
+) -> (u32, u32) {
+    // Here you can calculate the Initial Collateral Ratio (ICR)
+    // and the collateral amount in USD.
+    let icr = (collateral_amount as f64 / debt_amount as f64) * 100.0;
+    let collateral_amount_usd = (collateral_amount as f64 * btc_price_usd as f64) / 100_000_000.0;
+    
+    // Return ICR and collateral amount in USD
+    (icr as u32, collateral_amount_usd as u32)
 }
